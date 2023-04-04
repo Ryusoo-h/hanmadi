@@ -226,7 +226,7 @@ const Home = () => {
                             {currentList.more ? (
                                 <details className="detail-description">
                                     <summary>더보기</summary>
-                                    자세한 설명
+                                    {currentList.more}
                                 </details>
                                 ) : <div className="detail-description" />}
 

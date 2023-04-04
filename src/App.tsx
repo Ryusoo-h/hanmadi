@@ -8,6 +8,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/:randomListIndex" element={<Home />} />
       <Route path="/lists" element={<Lists />} />
     </Routes>
   );

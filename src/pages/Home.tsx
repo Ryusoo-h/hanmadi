@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import SplashScreen from "../components/SplashScreen";
+import terms, { Term } from "../terms";
+import { useNavigate, useParams } from "react-router-dom";
 
 const HomeWrapper = styled.main`
     width: 100%;
@@ -41,6 +43,10 @@ const DescriptionCard = styled.section`
     bottom: 0;
     left: 50%;
     transform: translate(-50%, calc(100% - (var(--padding)*2 + var(--font-size))));
+    .description {
+        width: 80%;
+        margin: 0 auto;
+    }
     #description-toggle-button {
         width: 60%;
         font-size: var(--font-size);
@@ -74,7 +80,7 @@ const DescriptionCard = styled.section`
         margin: 1rem auto;
         border-top: solid 1px #ddd;
         width: 80%;
-        height: 14rem;
+        max-height: 10rem;
         overflow-Y: auto;
         color: #333;
         &::-webkit-scrollbar {
@@ -144,35 +150,109 @@ const LinkButton = styled.a`
 `;
 
 const Home = () => {
+    const navigate = useNavigate();
     const [openSplashScreen, setOpenSplashScreen] = useState<boolean>(true);
     const [openDescriptionCard, setOpenDescriptionCard] = useState<boolean>(false);
 
+    const [randomTermList, setRandomTermList] = useState<Term[]>([]);
+    const [currentListIndex, setCurrentListIndex] = useState<number>(0);
+    const [currentList, setCurrentList] = useState<Term>({
+        category: 'CS',
+        term: '',
+        description: ''
+    });
+    const makeRandomList = (list:Term[]) => { // TODO: 만약 list 개수가 엄청크다면 어떻게 할거야? 고민이 필요해
+        const randomList = list;
+        //피셔 예이츠 셔플 알고리즘으로 랜덤만들기
+        for(let i = list.length; i > 0; i--) {
+            const lastIdx = i-1;
+            let roll = Math.floor(Math.random()*i);
+            let temp = randomList[lastIdx];
+            randomList[lastIdx] = randomList[roll];
+            randomList[roll] = temp;
+        }
+        return randomList;
+    }
     useEffect(() => {
         setTimeout(() => { setOpenSplashScreen(false); }, 3000);
+        const newRandomList = makeRandomList(terms);
+        setRandomTermList(newRandomList);
+        navigate('/1');
+        setCurrentListIndex(1);
+        setCurrentList(newRandomList[0]);
     },[])
-
+    const params = useParams();
+    const onClickPrev = () => {
+        const firstIndex = Number(params.randomListIndex);
+        const lastIndex = randomTermList.length;
+        if (firstIndex === 1) {
+            //TODO 음.. 더이상 뒤로가기 아닐떈 어떻게 할지 고민이 필요함
+            navigate(-1);
+            setCurrentList(randomTermList[lastIndex - 1]);
+            setCurrentListIndex(lastIndex);
+            setOpenDescriptionCard(false);
+            return false;
+        }
+        navigate(-1);
+        setCurrentList(randomTermList[firstIndex - 2]);
+        setCurrentListIndex(firstIndex);
+        setOpenDescriptionCard(false);
+    }
+    const onClickRandomNext = () => {
+        if (currentListIndex === randomTermList.length) {
+            navigate('/1');
+            setCurrentListIndex(1);
+            setCurrentList(randomTermList[0]);
+            setOpenDescriptionCard(false);
+            return false;
+        }
+            navigate(`/${currentListIndex + 1}`);
+            setCurrentList(randomTermList[currentListIndex]);
+            setCurrentListIndex(currentListIndex + 1);
+            setOpenDescriptionCard(false);
+    }
     return (
         <>
             <HomeWrapper className={openDescriptionCard ? "opened-description-card" : ""}>
-                <KeywordCard className={openDescriptionCard ? "opened-description-card" : ""} onClick={() => {setOpenDescriptionCard(false);}}>
-                    키워드
-                </KeywordCard>
-                <DescriptionCard className={openDescriptionCard ? "opened-description-card" : ""}>
-                    <button id="description-toggle-button" onClick={() => {setOpenDescriptionCard(true);}}>#한마디보기</button>
-                    <h2 style={{display: "none"}}>키워드 설명</h2>
-                    <p className="description">키워드 한문장으로 설명</p>
-                    <details className="detail-description">
-                        <summary>더보기</summary>
-                        자세한 설명
-                    </details>
-                    <LinkInfoWrapper>
-                        <h2 style={{fontWeight: "normal", fontSize: "1.125rem", margin: "0.5rem"}}>참고링크</h2>
-                        <LinkButton href="http://naver.com" target="_blank">참고링크입니다</LinkButton>
-                        <LinkButton href="" target="_blank">참고링크는 최대 두개까지만</LinkButton>
-                    </LinkInfoWrapper>
-                </DescriptionCard>
-                <MainButton id="back-button" ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Arrow.svg`} alt="back-button-icon" /></MainButton>
-                <MainButton id="random-button" ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Random.svg`} alt="random-button-icon" /></MainButton>
+                {currentListIndex > 0 ? (
+                    <>
+                        <KeywordCard className={openDescriptionCard ? "opened-description-card" : ""} onClick={() => {setOpenDescriptionCard(false);}}>
+                            {currentList.term}
+                        </KeywordCard>
+                        <DescriptionCard className={openDescriptionCard ? "opened-description-card" : ""}>
+                            <button id="description-toggle-button" onClick={() => {setOpenDescriptionCard(true);}}>#한마디보기</button>
+                            <h2 style={{display: "none"}}>키워드 설명</h2>
+                            <p className="description">{currentList.description}</p>
+                            {currentList.more ? (
+                                <details className="detail-description">
+                                    <summary>더보기</summary>
+                                    자세한 설명
+                                </details>
+                                ) : <div className="detail-description" />}
+
+                            {currentList.link ? (
+                                <LinkInfoWrapper>
+                                    <h2 style={{fontWeight: "normal", fontSize: "1.125rem", margin: "0.5rem"}}>참고링크</h2>
+                                    {currentList.link?.map((link) => {
+                                        return <LinkButton href={link[1]} key={link[0]} target="_blank">{link[0]}</LinkButton>
+                                    })}
+                                </LinkInfoWrapper>
+                                ) : ''}
+                            
+                        </DescriptionCard>
+                        <MainButton id="back-button" onClick={() => {onClickPrev();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Arrow.svg`} alt="back-button-icon" /></MainButton>
+                        <MainButton id="random-button" onClick={() => {onClickRandomNext();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Random.svg`} alt="random-button-icon" /></MainButton>
+                    </>
+                ) : (
+                    <>
+                        <KeywordCard className={openDescriptionCard ? "opened-description-card" : ""}>
+                            잘못된 경로!
+                        </KeywordCard>
+                        <MainButton id="back-button" onClick={() => {onClickPrev();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Arrow.svg`} alt="back-button-icon" /></MainButton>
+                        <MainButton id="random-button" onClick={() => {onClickRandomNext();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Random.svg`} alt="random-button-icon" /></MainButton>
+                    </>
+                )}
+                
             </HomeWrapper>
             {openSplashScreen && <SplashScreen />}
         </>

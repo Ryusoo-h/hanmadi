@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import SplashScreen from "../components/SplashScreen";
-import terms, { Term } from "../terms";
+import { Term } from "../terms";
 import { useNavigate, useParams } from "react-router-dom";
 
 const HomeWrapper = styled.main`
@@ -175,11 +175,13 @@ const Home = () => {
     }
     useEffect(() => {
         setTimeout(() => { setOpenSplashScreen(false); }, 3000);
-        const newRandomList = makeRandomList(terms);
-        setRandomTermList(newRandomList);
-        navigate('/1');
-        setCurrentListIndex(1);
-        setCurrentList(newRandomList[0]);
+        import('../terms').then(result => makeRandomList(result.default))
+            .then(newRandomList => {
+                setRandomTermList(newRandomList);
+                navigate('/1');
+                setCurrentListIndex(1);
+                setCurrentList(newRandomList[0]);
+            });
     },[])
     const params = useParams();
     const onClickPrev = () => {

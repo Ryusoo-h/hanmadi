@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.5b6ea6b4.css",
-    "main.js": "/static/js/main.9f8f6720.js",
-    "static/js/371.c78cc7d1.chunk.js": "/static/js/371.c78cc7d1.chunk.js",
-    "static/js/787.841007c8.chunk.js": "/static/js/787.841007c8.chunk.js",
-    "index.html": "/index.html",
-    "main.5b6ea6b4.css.map": "/static/css/main.5b6ea6b4.css.map",
-    "main.9f8f6720.js.map": "/static/js/main.9f8f6720.js.map",
-    "371.c78cc7d1.chunk.js.map": "/static/js/371.c78cc7d1.chunk.js.map",
-    "787.841007c8.chunk.js.map": "/static/js/787.841007c8.chunk.js.map"
+    "main.css": "/hanmadi/static/css/main.5b6ea6b4.css",
+    "main.js": "/hanmadi/static/js/main.394a684a.js",
+    "static/js/371.c78cc7d1.chunk.js": "/hanmadi/static/js/371.c78cc7d1.chunk.js",
+    "static/js/787.841007c8.chunk.js": "/hanmadi/static/js/787.841007c8.chunk.js",
+    "index.html": "/hanmadi/index.html",
+    "main.5b6ea6b4.css.map": "/hanmadi/static/css/main.5b6ea6b4.css.map",
+    "main.394a684a.js.map": "/hanmadi/static/js/main.394a684a.js.map",
+    "371.c78cc7d1.chunk.js.map": "/hanmadi/static/js/371.c78cc7d1.chunk.js.map",
+    "787.841007c8.chunk.js.map": "/hanmadi/static/js/787.841007c8.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5b6ea6b4.css",
-    "static/js/main.9f8f6720.js"
+    "static/js/main.394a684a.js"
   ]
 }

@@ -40,6 +40,7 @@ const terms:Term[] = [
         category: 'CS',
         term: 'FOIT vs FOUT', 
         description: 'FOIT:Flash of Invisible Text 브라우저가 웹 글꼴을 다운로드하기 전에 텍스트가 보이지 않는 현상 FOUT:Flash of Unstyled Tex 브라우저가 웹 글꼴을 다운로드하기 전에 텍스트가 대체 글꼴로 렌더링되는 현상',
+        more: 'FOIT 발생 브라우저 : chrome, safari, firefox. FOUT 발생 브라우저: IE, edge'
     },
     {
         category: 'CS',
@@ -147,8 +148,144 @@ const terms:Term[] = [
             ['스터디notion에 정리한 내용', 'https://www.notion.so/onestroke/4-5-e9661dad47f74f93bac8a2078a996186?pvs=4'], 
         ]
     },
+    {
+        category: 'CS',
+        term: 'http',
+        description: 'Hyper Text Transfer Protocol. 하이퍼미디어 문서를 전송하기위한 애플리케이션 레이어 프로토콜',
+        link: [
+            ['스터디notion에 정리한 내용', 'https://www.notion.so/ryu-soohyeon/http-WebSocket-WebRTC-08b141589e474b5cb1f4f94c8b4eb59b?pvs=4'], 
+        ]
+    },
+    {
+        category: 'CS',
+        term: 'WebSocket',
+        description: '웹소켓 프로토콜 : Request-Response가 아니라 커넥션이 Open-Close된 여부이다.',
+        more: '브라우저 서버 둘 다 서로에게 메세지를 보내고 받을 수 있기 때문에 채팅방, 주식거래앱, 게임처럼 리얼타임 경험을 위해 만들어졌다',
+        link: [
+            ['스터디notion에 정리한 내용', 'https://www.notion.so/ryu-soohyeon/http-WebSocket-WebRTC-08b141589e474b5cb1f4f94c8b4eb59b?pvs=4'], 
+        ]
+    },
+    {
+        category: 'CS',
+        term: 'WebRTC',
+        description: 'Web Real-Time Communication. 웹 브라우저 환경 및 Android, IOS 애플리케이션에서도 사용 가능한 비디오, 음성 및 일반 데이터가 피어간에 실시간으로 전송되도록 지원하는 오픈 소스',
+        link: [
+            ['스터디notion에 정리한 내용', 'https://www.notion.so/ryu-soohyeon/http-WebSocket-WebRTC-08b141589e474b5cb1f4f94c8b4eb59b?pvs=4'], 
+        ]
+    },
+    {
+        category: 'CS',
+        term: 'Signaling서버(Mesh), MCU, SFU 서버',
+        description: 'Signaling서버(Mesh): P2P 방식. 1:1연결에 적합. MCU: Multi-point Control Unit. N:M 구조에 사용 가능. 다수의 송출 미디어를 중앙 서버에서 혼합(muxing) 또는 가공(transcoding)하여 수신측으로 전달하는 중앙 서버 방식. SFU 서버: Selective Forwarding Unit. 1:N 형식 또는 소규모 N:M. 종단 간 미디어 트래픽을 중계하는 중앙 서버 방식',
+        link: [
+            ['스터디notion에 정리한 내용', 'https://www.notion.so/ryu-soohyeon/http-WebSocket-WebRTC-08b141589e474b5cb1f4f94c8b4eb59b?pvs=4'], 
+        ]
+    },
+    {
+        category: 'CS',
+        term: '쿠키와 세션',
+        description: '쿠키 : 의미있는 데이터를 클라이언트 위치에 특정 경로에 파일로 저장하여, 요청 때마다 쿠키 정보를 클라이언트에게 전달하는 방식으로 서버가 클라이언트의 상태를 내부적으로 저장하지 않기 때문에 서버의 부하가 적음. 세션 : 인증된 클라이언트의 정보를 서버에서 내부적으로 저장하고 관리하는 방식. 클라이언트에게 세션쿠키를 이용하여 세션 ID를 전달하고, 클라이언트는 세션ID를 Request에 포함하여 전송하여 유저를 알 수 있다',
+        more: 'http 프로토콜의 특징인 비연결성(Connectionless)과 비상태성(Stateless)으로 인해 서버의 자원을 절약하기 위해 모든 사용자의 요청마다 연결과 해제의 과정을 거치기 때문에 연결 상태가 유지되지 않고, 연결 해제 후에 상태 정보가 저장되지 않는데 이를 보완하여 서버가 클라이언트를 식별하게 해주는 것이 쿠키와 섹션이다.',
+        link: [
+            ['스터디notion에 정리한 내용', 'https://www.notion.so/ryu-soohyeon/0096461935a44154ad13eff3f11d9f35?pvs=4'], 
+        ]
+    },
+    {
+        category: 'CS',
+        term: 'TCP vs UDP',
+        description: 'TCP(Transmission Control Protocol): 순서를 보장하기위해 패킷에 숫자를 붙여 보내어 데이터 전달 보증한다. 신뢰할 수 있는 프로토콜. 연결 시 3way handshake, 연결 끊을 시 4way handshake. UDP(User Datagram Protocol): 3way handshake 하지 않는 그냥 리스너. 실시간성이 더 중요할때 약간의 손실이 있더라도 데이터 전송이 빠른 UDP를 사용함',
+        more: 'TCP가 UDP보다 항상 안정적인가?→ 아닐수있다 UDP가 순서대로 잘 받아졌다면 TCP는 그저 느릴 뿐임…',
+    },
+    {
+        category: 'CS',
+        term: 'MDN', 
+        description: '- 모질라 개발자 네트워크. 웹표준과 모질라 프로젝트에 대한 개발 문서들이 담긴 모질라의 공식 웹사이트로 HTML, 자바스크립트, CSS, 웹 API, MathML 등 다양한 주제의 웹 개발 자료를 담고 있다.',
+    },
+    {
+        category: 'CS',
+        term: 'UI/UX', 
+        description: 'User interface. 눈에 보이는 모든것 / User experience. 제품이나 서비스를 사용하면서 느끼는 모든 경험이나 만족도',
+    },
+    {
+        category: 'CS',
+        term: '가상클래스 vs 가상요소',
+        description: '가상클래스 : 실제로 존재하는 요소에 특정 이벤트나 환경에 맞춰 가상으로 클래스를 줘서css로 제어하는 것을 말한다. 가상요소 : 실제로 존재하지 않는 가상의 요소를 만들어  스타일을 주는 것을 말한다. (이중 콜론(::)은 ie9 이상 부터 지원한다.)', 
+    },
+    {
+        category: 'CS',
+        term: 'section 과 article 차이', 
+        description: 'section : 논리적으로 관계있는 요소 또는 문서를 분리할 때 사용한다. article : article 태그는 section과 다르게 독립적으로 존재할 수 있으며 재사용 할 수 있다. 주로 블로그글, 포럼, 뉴스 기사 등을 article로 묶는다.',
+    },
+    {
+        category: 'CS',
+        term: 'script defer vs async', 
+        description: 'defer: 백그라운드에서 다운로드함. HTML파싱이 멈추지 않고 페이지 구성이 끝날때까지 스크립트 실행이 지연된다. async: 백그라운드에서 다운로드함. async 스크립트 실행 중에는 HTML 파싱이 멈춤.',
+    },
+    {
+        category: 'CS',
+        term: '반응형 웹 / 적응형 웹', 
+        description: '반응형 : 화면의 크기따라 변함. 유지보수가 효율적임. 적응형 : 기준이되는 기기 사이즈에 따라 홈페이지 사이즈가 고정됨. 코드가 복잡하지 않지만 유지보수가 어렵다(해상도별 업데이트 필요)',
+    },
+    {
+        category: 'CS',
+        term: 'JavaScript', 
+        description: '웹 브라우저에서 동작하는 유일한 프로그래밍 언어로, 개발자가 별도의 컴파일 작업을 수행하지 않는 인터프리터 언어이다',
+    },
+    {
+        category: 'CS',
+        term: 'SPA vs SSR', 
+        description: 'SAP(클라이언트 사이드 렌더링): 최초 한 번 페이지 전체를 로딩한 후, 데이터만 변경하여 사용할 수 있는 애플리케이션 <-> 전통적인 웹 방식(SSR) : 요청 시 마다 새로고침이 일어나며 페이지를 로딩할 때마다 서버로부터 리소스를 전달받아 해석하고 렌더링하는 방식'
+    },
+    {
+        category: 'CS',
+        term: '가비지 콜렉터', 
+        description: '애플리케이션이 할당한 메모리 공간을 주기적으로 검사하여 더 이상 사용되고 있지 않는 메모리를 해제하는 기능'
+    },
+    {
+        category: 'CS',
+        term: 'JSON', 
+        description: 'JavaScript Object Notation : 자바스크립트 객체 표기법. ”키-값 쌍”으로 이루어진 데이터 오브젝트를 전달하기위해 인간이 읽을 수 있는 텍스트를 사용하는 개방형 표준 포멧, 본래는 자바스크립트 언어로부터 파생되어 자바스크립트 구문 형식을 따르지만 언어 독립형 데이터 포멧이라 수많은 프로그래밍 언어에서 쉽게 이용할 수 있다.'
+    },
+    {
+        category: 'CS',
+        term: 'AJAX', 
+        description: 'javascript의 라이브러리, 클라이언트와 서버 간에 XML, json 데이터를 주고받는 비동기 통신입니다.'
+    },
+    {
+        category: 'CS',
+        term: 'bubbling vs capturing', 
+        description: 'bubbling : 이벤트가 발생한 element부터 조상들에게 순차적으로 이벤트가 전파되는 방식. capturing : 이벤트가 발생한 element부터 자식들에게 순차적으로 이벤트가 전파되는 방식',
+        more: 'event.preventDefault() : 현재 이벤트의 default 동작을 중단함. event.stopPropagation() : 현재 이벤트가 bubbling 혹은 capturing 되는 것을 막음. event.stopImmediatePropagation() : bubbling 혹은 capturing 뿐만 아니라, 해당 개체에 걸린 현재 event를 제외한, 다른 event들의 동작까지 막음',
+    },
+    {
+        category: 'CS',
+        term: '클로저(Closure)', 
+        description: '자신을 포함하고 있는 외부함수보다 내부함수가 더 오래 유지되는 경우, 외부 함수 밖에서 내부함수가 호출되더라도 외부함수의 지역 변수에 접근할 수 있는데 이러한 함수를 클로저(Closure)라고 부른다.',
+        more: '클로저란 어떤 함수 P 에서 선언한 변수 x 를 참조하는 내부함수 Q 를 외부로 전달할 경우 P 의 실행 컨텍스트가 종료된 이후에도 변수 x 가 사라지지 않는 것',
+        link: [
+            ['노션정리 : 클로저', 'https://www.notion.so/ryu-soohyeon/19-8f5d0fe71e0e4a169f794450350f52ed?pvs=4']
+        ]
+    },
+    {
+        category: 'CS',
+        term: '인스턴스', 
+        description: '비슷한 성질을 가진 여러 객체를 만들기위한 클래스나 프로토타입을 사용해 만들어낸 객체를 말한다.'
+    },
+    {
+        category: 'CS',
+        term: '호이스팅', 
+        description: '자바스크립트 엔진(번역기, Interpreter)이 코드를 실행하기 전, 변수, 함수, 클래스의 선언문을 끌어올리는 것을 말함',
+    },
+    {
+        category: 'CS',
+        term: '스로틀 vs 디바운스',
+        description: '스로틀: 마지막 함수가 호출된 후 일정 시간이 지나기 전에 다시 호출되지 않도록 하는 것. 디바운스: 연이어 호출되는 함수들 중 마지막 함수(또는 제일 처음)만 호출하도록 하는 것',
+        more: '스로틀은 적어도 n밀리 초마다 정기적으로 기능 실행을 보장하지만 디바운스는 아무리 많은 이벤트가 발생해도 모두 무시하고 특정 시간사이에 어떤 이벤트도 발생하지 않았을 때 딱 한번만 마지막 이벤트를 발생시키는 기법',
+        link: [
+            ['디바운스(Debounce)와 스로틀(Throttle ) 그리고 차이점', 'https://webclub.tistory.com/607']
+        ]
+    },
 
-    // get과 post차이 부터 기록하면 됨
     // {
     //     category: 'CS',
     //     term: '키워드', 

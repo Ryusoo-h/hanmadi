@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import SplashScreen from "../components/SplashScreen";
 import { Term } from "../terms";
 import { useNavigate, useParams } from "react-router-dom";
+import YesOrNoModal from "../components/YesOrNoModal";
 
 const HomeWrapper = styled.main`
     width: 100%;
@@ -153,6 +154,7 @@ const Home = () => {
     const navigate = useNavigate();
     const [openSplashScreen, setOpenSplashScreen] = useState<boolean>(true);
     const [openDescriptionCard, setOpenDescriptionCard] = useState<boolean>(false);
+    const [openShuffleYesOrNoModal, setOpenShuffleYesOrNoModal] = useState<boolean>(false);
 
     const [randomTermList, setRandomTermList] = useState<Term[]>([]);
     const [currentListIndex, setCurrentListIndex] = useState<number>(0);
@@ -161,7 +163,7 @@ const Home = () => {
         term: '',
         description: ''
     });
-    const makeRandomList = (list:Term[]) => { // TODO: 만약 list 개수가 엄청크다면 어떻게 할거야? 고민이 필요해
+    const makeRandomList = useCallback((list:Term[]) => { // TODO: 만약 list 개수가 엄청크다면 어떻게 할거야? 고민이 필요해
         const randomList = list;
         //피셔 예이츠 셔플 알고리즘으로 랜덤만들기
         for(let i = list.length; i > 0; i--) {
@@ -172,7 +174,7 @@ const Home = () => {
             randomList[roll] = temp;
         }
         return randomList;
-    }
+    }, []);
     useEffect(() => {
         setTimeout(() => { setOpenSplashScreen(false); }, 3000);
         import('../terms').then(result => makeRandomList(result.default))
@@ -186,18 +188,12 @@ const Home = () => {
     const params = useParams();
     const onClickPrev = () => {
         const firstIndex = Number(params.randomListIndex);
-        const lastIndex = randomTermList.length;
-        if (firstIndex === 1) {
-            //TODO 음.. 더이상 뒤로가기 아닐떈 어떻게 할지 고민이 필요함
-            navigate(-1);
-            setCurrentList(randomTermList[lastIndex - 1]);
-            setCurrentListIndex(lastIndex);
-            setOpenDescriptionCard(false);
+        if (firstIndex === 1) { // 첫번째 단어일 경우
             return false;
         }
         navigate(-1);
         setCurrentList(randomTermList[firstIndex - 2]);
-        setCurrentListIndex(firstIndex);
+        setCurrentListIndex(firstIndex - 1);
         setOpenDescriptionCard(false);
     }
     const onClickRandomNext = () => {
@@ -242,7 +238,7 @@ const Home = () => {
                                 ) : ''}
                             
                         </DescriptionCard>
-                        <MainButton id="back-button" onClick={() => {onClickPrev();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Arrow.svg`} alt="back-button-icon" /></MainButton>
+                        <MainButton id="back-button" onClick={() => {onClickPrev(); if (Number(params.randomListIndex) === 1){setOpenShuffleYesOrNoModal(true);}}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Arrow.svg`} alt="back-button-icon" /></MainButton>
                         <MainButton id="random-button" onClick={() => {onClickRandomNext();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Random.svg`} alt="random-button-icon" /></MainButton>
                     </>
                 ) : (
@@ -254,7 +250,15 @@ const Home = () => {
                         <MainButton id="random-button" onClick={() => {onClickRandomNext();}} ><img className="icon" src={`${process.env.PUBLIC_URL}/img/icon/Random.svg`} alt="random-button-icon" /></MainButton>
                     </>
                 )}
-                
+                { openShuffleYesOrNoModal && (
+                    <YesOrNoModal onClickYes={() => { const newRandomList = makeRandomList(randomTermList); setRandomTermList(newRandomList); 
+                        setRandomTermList(newRandomList);
+                        navigate('/1');
+                        setCurrentListIndex(1);
+                        setCurrentList(newRandomList[0]); setOpenShuffleYesOrNoModal(false);}} onClickNo={() => {setOpenShuffleYesOrNoModal(false);}}>
+                        <span>첫 번째 단어입니다.<br />단어장을 새로 섞을까요?</span>
+                    </YesOrNoModal>
+                )}
             </HomeWrapper>
             {openSplashScreen && <SplashScreen />}
         </>
